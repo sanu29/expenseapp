@@ -37,16 +37,47 @@
 						
 							<input
 							type="text"
+							name="amt"
 							id="num"
 							class="form-control"
 							placeholder="Amount spent"
 							aria-label="Amount spent"
 							aria-describedby="spent in rupee"
+							onblur="return val()"
 						/>
 						<div class="input-group-append">
 							<span class="input-group-text" id="spent in rupee">₹</span>
 						</div>
 					</div>
+
+
+
+
+
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="spent at">@</span>
+						</div>
+						<input
+							type="date"
+							class="form-control"
+							id=date1
+							placeholder="date1"
+							aria-label="date1"
+							aria-describedby="date1"
+							blur="return val2()"
+						/>
+						
+					</div>
+
+
+
+
+
+
+
+
+
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="spent at">@</span>
@@ -54,13 +85,14 @@
 						<input
 							type="text"
 							class="form-control"
-							id=desc
+							id="desc"
 							placeholder="spent On"
 							aria-label="spent On"
 							aria-describedby="spent at"
+							onblur="return val2()"
 						/>
 						<div class="input-group-append">
-							<button class="btn btn-outline-primary" type="button"  id="butid">Add</button>
+							<button class="btn btn-outline-primary" onclick="return val()" type="button"  id="butid">Add</button>
 						</div>
 					</div>
 				</div>
@@ -78,24 +110,37 @@
 
 		//function of adding
 		function addExpense(){
+			console.clear();
+			
 			const inputelement=document.querySelector("#num");
 			//value of input 
 			const inputval= inputelement.value;
-			//convert to num
 			const amount=parseInt(inputval);
-			//for desc
 			const descl=document.querySelector("#desc");
 			//value of input 
 			const descp= descl.value;
+
+			const date1=document.querySelector("#date1");
+			var dat=date1.value.toString();
+
+
+			console.log(dat);
+
+			
 			
 
 			//object creation
 			const  obj={};
 			obj.amount=amount;
 			obj.desc=descp;
-			obj.moment= new Date();
-			console.clear();
+		
+			obj.moment=new Date();
+			
+			obj.mon=new Date(dat);
 			console.log(obj);
+			
+			console.log(obj.mon);
+			
 			allExpense.push(obj);
 
 			console.table(allExpense)
@@ -134,18 +179,23 @@ form.reset();
 						
 					}
 
-					function getDateString(moment)
+					// function getDateString(moment)
+					// {
+					// 	return moment.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+					// }
+
+					function getString(moment)
 					{
-						return moment.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'})
+						return moment.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
 					}
-					function retExp({amount,desc,moment})
+					function retExp({amount,desc,moment,mon})
 					{
 						return `<div>
 					<ul class="list-group" id="table1">
 						<li class="list-group-item d-flex justify-content-between">
 							<div class="d-flex flex-column"> 
 								${desc}
-								<small class="text-muted"> ${getDateString(moment)}</small>
+								<small class="text-muted"> ${getString(mon)}</small>
 							</div>
 							<div>
 								<span class="px-5">
@@ -163,6 +213,44 @@ form.reset();
 		const element = document.querySelector("#butid");
 		//listening to the event
 		element.addEventListener("click",addExpense,false);
+		function val()
+		{
+			const no = document.querySelector("#num");
+			const nom = no.value;
+			const nomb=parseInt("nom");
+			if(nom==null||nom==''||nom==' ')
+			{
+
+				alert("enter valid amount");
+			
+				return false;
+			}
+
+			// if(isInteger(nomb))
+			// {
+			// 	alert("hie");
+			// }
+		}
+function val2()
+		{
+			const descl=document.querySelector("#desc");
+			// //value of input 
+			// const descp= descl.value;
+			// if(descp||descp==='')
+			// {
+
+			// 	alert("enter valid description");
+			// }
+			// // if(isInteger(nomb))
+			// // {
+			// // 	alert("hie");
+			// // }
+		}
+
+
+
+
+
 	</script>
 </body>
 </html>
